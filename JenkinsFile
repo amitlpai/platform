@@ -13,7 +13,7 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				cd C:\hybris\hybris\bin\platform
+				cd "C:\hybris\hybris\bin\platform"
 				ant clean all
 			}
 		}
