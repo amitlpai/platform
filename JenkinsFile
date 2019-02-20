@@ -1,5 +1,8 @@
 pipeline {
     agent any 
+	options {
+        parallelsAlwaysFailFast()
+    }
     stages {
         stage('Checout code') {
             steps {
@@ -13,8 +16,7 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				bat "cd C:\\hybris\\hybris\\bin\\platform"
-				bat "ant clean all"
+				bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml clean all"
 			}
 		}
     }
