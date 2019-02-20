@@ -1,10 +1,21 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Checout code') {
             steps {
                 echo 'Hello world!' 
             }
         }
+		stage('Run SONAR') {
+			steps {
+				echo 'Run SONAR'
+			}
+		}
+		stage('Build') {
+			steps {
+				cd C:\hybris\hybris\bin\platform
+				ant clean all
+			}
+		}
     }
 }
