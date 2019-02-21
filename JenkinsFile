@@ -4,7 +4,57 @@ pipeline {
         parallelsAlwaysFailFast()
     }
     stages {
-        stage('Checout code') {
+	
+		stage('Init') {
+			parallel {
+				stage('Send Email') {
+					agent {
+						label 'sending email'
+					}
+					steps {
+						echo 'email sent'
+					}
+				}
+				stage('Checkout code') {
+					agent {
+						label 'checkout code'
+					}
+					steps {
+						echo 'checkout codebase'
+					}
+				}
+			}
+		}
+       
+		stage('Build') {
+			parallel {
+				stage('Build codebase') {
+					agent {
+						label 'build code from branch'
+					}
+					steps {
+						bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml all"
+					}
+				}
+				stage('Run SONAR') {
+					agent {
+						label 'SONAR Analysis'
+					} 
+					steps {
+						bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml sonarsingle -Dextension.names=twmwebservices"
+					}
+				}
+				stage('Run JUNITS') {
+					agent {
+						label 'Execute JUNITS'
+					}
+					steps {
+						echo 'execute JUNITS'
+					}
+				}
+			}
+		}
+	   stage('Checout code') {
             steps {
                 echo 'Hello world!' 
             }
