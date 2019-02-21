@@ -8,17 +8,13 @@ pipeline {
 		stage('Init') {
 			parallel {
 				stage('Send Email') {
-					agent {
-						label 'sending email'
-					}
+					agent any
 					steps {
 						echo 'email sent'
 					}
 				}
 				stage('Checkout code') {
-					agent {
-						label 'checkout code'
-					}
+					agent any
 					steps {
 						echo 'checkout codebase'
 					}
@@ -29,25 +25,19 @@ pipeline {
 		stage('Build') {
 			parallel {
 				stage('Build codebase') {
-					agent {
-						label 'build code from branch'
-					}
+					agent any
 					steps {
 						bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml all"
 					}
 				}
 				stage('Run SONAR') {
-					agent {
-						label 'SONAR Analysis'
-					} 
+					agent any
 					steps {
 						bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml sonarsingle -Dextension.names=twmwebservices"
 					}
 				}
 				stage('Run JUNITS') {
-					agent {
-						label 'Execute JUNITS'
-					}
+					agent any
 					steps {
 						echo 'execute JUNITS'
 					}
