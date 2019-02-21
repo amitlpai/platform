@@ -54,20 +54,6 @@ pipeline {
 				}
 			}
 		}
-	   stage('Checout code') {
-            steps {
-                echo 'Hello world!' 
-            }
-        }
-		stage('Run SONAR') {
-			steps {
-				echo 'Run SONAR'
-			}
-		}
-		stage('Build') {
-			steps {
-				bat "ant -buildfile c:\\hybris\\hybris\\bin\\platform\\build.xml clean all"
-			}
-		}
+		
     }
 }
